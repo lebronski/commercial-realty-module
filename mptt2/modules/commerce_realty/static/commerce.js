@@ -104,10 +104,20 @@ const SORT_FIELDS = [
 ];
 
 const PAGE_SIZE = 50;
-const CELL_PX = 40;
 const POINTS_MIN_ZOOM = 14;
 const MAX_POINTS = 2500;
-const RAMP = ['#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#bd0026'];
+// От зелёного (мало) через жёлтый к красному (много). Та же шкала — в .cm-ramp (commerce.css).
+const RAMP = ['#1a9850', '#91cf60', '#fee08b', '#fc8d59', '#d73027'];
+const RAMP_RGB = RAMP.map(h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)));
+
+// Тепловая поверхность: значения объектов размываются гауссовым ядром.
+const HEAT_CELL_PX = 4;        // шаг сетки расчёта, пикселей (потом сглаживается при растяжении)
+const HEAT_SIGMA_PX = 26;      // ширина пятна вокруг объекта на мелком масштабе, пикселей
+const HEAT_SIGMA_M = 140;      // ...но не меньше стольких метров — чтобы в городе не было дыр
+const HEAT_SIGMA_MAX_M = 1200; // и не больше — иначе на обзоре региона закрашиваются леса между сёлами
+const HEAT_SIGMA_MAX_PX = 110; // предел, чтобы на крупном масштабе расчёт оставался быстрым
+const HEAT_ALPHA = 0.62;       // непрозрачность поверхности
+const HEAT_ALPHA_UNDER_POINTS = 0.38;
 
 const state = {
   all: [], filtered: [], categories: {},
@@ -115,21 +125,24 @@ const state = {
   scale: { min: 0, max: 1 },
 };
 
-let map, heatLayer, pointLayer, canvas;
+let map, heat, pointLayer, canvas;
 
 
 /* ============================================================
    Цвета
    ============================================================ */
 
-function ramp(t) {
+function rampRgb(t) {
   t = Math.max(0, Math.min(1, t));
-  const x = t * (RAMP.length - 1);
-  const i = Math.min(RAMP.length - 2, Math.floor(x));
-  const f = x - i;
-  const a = parseInt(RAMP[i].slice(1), 16), b = parseInt(RAMP[i + 1].slice(1), 16);
-  const ch = s => Math.round(((a >> s) & 255) + (((b >> s) & 255) - ((a >> s) & 255)) * f);
-  return `rgb(${ch(16)},${ch(8)},${ch(0)})`;
+  const x = t * (RAMP_RGB.length - 1);
+  const i = Math.min(RAMP_RGB.length - 2, Math.floor(x));
+  const f = x - i, a = RAMP_RGB[i], b = RAMP_RGB[i + 1];
+  return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f];
+}
+
+function ramp(t) {
+  const [r, g, b] = rampRgb(t).map(Math.round);
+  return `rgb(${r},${g},${b})`;
 }
 
 function liqBar(v) {
@@ -307,7 +320,7 @@ $('cm-body').addEventListener('click', e => {
   const o = state.all.find(x => x.id === +tr.dataset.id);
   if (!o) return;
   map.setView([o.lat, o.lon], Math.max(map.getZoom(), 17));
-  L.popup().setLatLng([o.lat, o.lon]).setContent(popupHtml(o)).openOn(map);
+  openCard([o.lat, o.lon], popupHtml(o));
   $('cm-map').scrollIntoView({ behavior: 'smooth', block: 'center' });
 });
 
@@ -328,10 +341,118 @@ function initMap() {
   }).addTo(map);
   L.control.scale({ imperial: false }).addTo(map);
   canvas = L.canvas({ padding: 0.2 });
-  heatLayer = L.layerGroup().addTo(map);
+  heat = createHeatSurface();
   pointLayer = L.layerGroup().addTo(map);
   listingLayer = L.layerGroup().addTo(map);
-  map.on('moveend', redrawMap);
+  map.on('moveend resize', redrawMap);
+  map.on('mousemove', showHeatValue);
+  map.on('mouseout', () => { $('cm-legend-hover').textContent = ''; });
+}
+
+
+/* ---------- Плавная тепловая поверхность ----------
+   Каждый объект «размывается» гауссовым пятном. В каждой точке экрана
+   цвет = взвешенное среднее показателя ближайших объектов, а прозрачность
+   зависит от того, сколько объектов рядом: там, где их нет (лес, поля),
+   поверхность плавно сходит на нет. Считается на грубой сетке и
+   растягивается со сглаживанием — отсюда плавные переходы без квадратов. */
+
+function createHeatSurface() {
+  map.createPane('cmHeat');
+  const pane = map.getPane('cmHeat');
+  pane.style.zIndex = 350;              // над подложкой (200), под точками (400)
+  pane.style.pointerEvents = 'none';
+  // leaflet-zoom-hide прячет холст на время анимации масштаба
+  const cv = L.DomUtil.create('canvas', 'leaflet-zoom-hide', pane);
+  return { cv, small: document.createElement('canvas'), grid: null };
+}
+
+function clearHeat() {
+  heat.cv.getContext('2d').clearRect(0, 0, heat.cv.width, heat.cv.height);
+  heat.grid = null;
+}
+
+function heatSigmaPx() {
+  const mpp = 40075016.686 * Math.cos(map.getCenter().lat * Math.PI / 180)
+              / Math.pow(2, map.getZoom() + 8);       // метров в пикселе
+  const meters = Math.min(HEAT_SIGMA_MAX_M, Math.max(HEAT_SIGMA_PX * mpp, HEAT_SIGMA_M));
+  return Math.min(HEAT_SIGMA_MAX_PX, meters / mpp);
+}
+
+/* valueOf(o) → 0..1 или null; isCount — рисовать плотность, а не среднее */
+function drawHeat(objs, valueOf, isCount, alphaMax) {
+  const size = map.getSize(), C = HEAT_CELL_PX;
+  const cv = heat.cv;
+  cv.width = size.x; cv.height = size.y;
+  L.DomUtil.setPosition(cv, map.containerPointToLayerPoint([0, 0]));
+
+  const gw = Math.ceil(size.x / C) + 1, gh = Math.ceil(size.y / C) + 1;
+  const s = heatSigmaPx() / C;                       // σ в ячейках сетки
+  const r = Math.ceil(3 * s), kw = 2 * r + 1;
+  const kernel = new Float32Array(kw * kw);
+  for (let dy = -r; dy <= r; dy++)
+    for (let dx = -r; dx <= r; dx++)
+      kernel[(dy + r) * kw + dx + r] = Math.exp(-(dx * dx + dy * dy) / (2 * s * s));
+
+  const W = new Float32Array(gw * gh), WV = new Float32Array(gw * gh);
+  for (const o of objs) {
+    const v = valueOf(o);
+    if (v == null) continue;
+    const p = map.latLngToContainerPoint([o.lat, o.lon]);
+    const cx = Math.round(p.x / C), cy = Math.round(p.y / C);
+    if (cx < -r || cy < -r || cx > gw + r || cy > gh + r) continue;
+    const x0 = Math.max(0, cx - r), x1 = Math.min(gw - 1, cx + r);
+    const y0 = Math.max(0, cy - r), y1 = Math.min(gh - 1, cy + r);
+    for (let y = y0; y <= y1; y++) {
+      const row = y * gw, krow = (y - cy + r) * kw + r - cx;
+      for (let x = x0; x <= x1; x++) {
+        const k = kernel[krow + x];
+        W[row + x] += k;
+        WV[row + x] += k * v;
+      }
+    }
+  }
+
+  let wmax = 0;
+  for (let i = 0; i < W.length; i++) if (W[i] > wmax) wmax = W[i];
+  const logMax = Math.log(1 + wmax) || 1;
+
+  const small = heat.small;
+  small.width = gw; small.height = gh;
+  const sctx = small.getContext('2d');
+  const img = sctx.createImageData(gw, gh), px = img.data;
+  for (let i = 0; i < W.length; i++) {
+    const w = W[i];
+    // 0.06 → прозрачно, 0.5 → полностью: мягкий край вокруг крайних объектов
+    let a = (w - 0.06) / 0.44;
+    if (a <= 0) continue;
+    if (a > 1) a = 1;
+    a = a * a * (3 - 2 * a);                         // smoothstep
+    const t = isCount ? Math.log(1 + w) / logMax : WV[i] / w;
+    const c = rampRgb(t), j = i * 4;
+    px[j] = c[0]; px[j + 1] = c[1]; px[j + 2] = c[2];
+    px[j + 3] = Math.round(a * alphaMax * 255);
+  }
+  sctx.putImageData(img, 0, 0);
+
+  const ctx = cv.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  // центр ячейки i — пиксель i·C, поэтому сдвиг на полъячейки
+  ctx.drawImage(small, -C / 2, -C / 2, gw * C, gh * C);
+
+  heat.grid = { W, WV, gw, gh, isCount };
+}
+
+function showHeatValue(e) {
+  const out = $('cm-legend-hover'), g = heat.grid;
+  if (!g || g.isCount) { out.textContent = ''; return; }
+  const x = Math.round(e.containerPoint.x / HEAT_CELL_PX);
+  const y = Math.round(e.containerPoint.y / HEAT_CELL_PX);
+  const w = (x >= 0 && y >= 0 && x < g.gw && y < g.gh) ? g.W[y * g.gw + x] : 0;
+  if (w < 0.15) { out.textContent = ''; return; }
+  const m = METRICS[$('cm-metric').value], { min, max } = state.scale;
+  out.textContent = 'под курсором ≈ ' + m.fmt(min + (g.WV[y * g.gw + x] / w) * (max - min));
 }
 
 function updateScale() {
@@ -382,49 +503,39 @@ function popupHtml(o) {
   </div>`;
 }
 
+/* Карточка открывается на карте сама по себе, а не привязанной к маркеру:
+   при сдвиге карты слои точек перерисовываются, и привязанная карточка
+   закрывалась бы вместе со своим маркером. */
+function openCard(latlng, html) {
+  L.popup({ maxWidth: 380, offset: [0, -6] }).setLatLng(latlng).setContent(html).openOn(map);
+}
+
 function redrawMap() {
   if (!map) return;
-  heatLayer.clearLayers();
   pointLayer.clearLayers();
   const key = $('cm-metric').value, m = METRICS[key];
   const zoom = map.getZoom();
   const b = map.getBounds().pad(0.1);
   const visible = state.filtered.filter(o => b.contains([o.lat, o.lon]));
+  const isCount = key === 'count';
+  const showPoints = $('cm-show-points').checked && zoom >= POINTS_MIN_ZOOM;
 
   if ($('cm-show-heat').checked) {
-    // Ячейки привязаны к мировым пикселям, поэтому не «плывут» при сдвиге карты
-    const cells = new Map();
-    for (const o of visible) {
-      const v = m.get(o);
-      if (v == null) continue;
-      const p = map.project([o.lat, o.lon], zoom);
-      const cx = Math.floor(p.x / CELL_PX), cy = Math.floor(p.y / CELL_PX);
-      const id = cx + ':' + cy;
-      let c = cells.get(id);
-      if (!c) { c = { cx, cy, sum: 0, n: 0 }; cells.set(id, c); }
-      c.sum += v; c.n++;
-    }
-    const isCount = key === 'count';
     if (isCount) {
-      const mx = Math.max(1, ...[...cells.values()].map(c => c.n));
-      state.scale = { min: 1, max: mx };
-      setLegend(m);
+      // плотность относительная — вместо чисел подписи «мало / много»
+      $('cm-legend-min').textContent = 'мало';
+      $('cm-legend-max').textContent = 'много';
     }
-    const showPoints = $('cm-show-points').checked && zoom >= POINTS_MIN_ZOOM;
-    for (const c of cells.values()) {
-      const val = isCount ? c.n : c.sum / c.n;
-      // для числа объектов шкала логарифмическая — иначе всё, кроме центра, бледное
-      const t = isCount
-        ? Math.log(val) / Math.log(Math.max(2, state.scale.max))
-        : norm(val);
-      const sw = map.unproject([c.cx * CELL_PX, (c.cy + 1) * CELL_PX], zoom);
-      const ne = map.unproject([(c.cx + 1) * CELL_PX, c.cy * CELL_PX], zoom);
-      L.rectangle([sw, ne], {
-        renderer: canvas, stroke: false, fillColor: ramp(t),
-        fillOpacity: showPoints ? 0.35 : 0.65, interactive: !showPoints,
-      }).bindTooltip(`${m.title}: ${m.fmt(val)}<br>объектов: ${c.n}`, { sticky: true })
-        .addTo(heatLayer);
-    }
+    const valueOf = isCount ? () => 1 : o => {
+      const v = m.get(o);
+      return v == null ? null : Math.max(0, Math.min(1, norm(v)));
+    };
+    // все отфильтрованные, а не только видимые: пятна объектов за краем
+    // экрана тоже заходят в кадр
+    drawHeat(state.filtered, valueOf, isCount,
+             showPoints ? HEAT_ALPHA_UNDER_POINTS : HEAT_ALPHA);
+  } else {
+    clearHeat();
   }
 
   if ($('cm-show-points').checked && zoom >= POINTS_MIN_ZOOM) {
@@ -435,7 +546,7 @@ function redrawMap() {
       L.circleMarker([o.lat, o.lon], {
         renderer: canvas, radius: 6, color: '#2c3e50', weight: 1,
         fillColor: ramp(t), fillOpacity: 0.95,
-      }).bindPopup(() => popupHtml(o), { maxWidth: 380 }).addTo(pointLayer);
+      }).on('click', () => openCard([o.lat, o.lon], popupHtml(o))).addTo(pointLayer);
     }
   }
   drawListings();
@@ -510,12 +621,75 @@ function drawListings() {
   if (!$('cm-show-listings').checked) return;
   for (const l of listingState.items) {
     if (l.lat == null) continue;
+    // Квадрат — объявление (объекты — круги); цвет — ликвидность места, как у объектов;
+    // буква — сделка: П — продажа, А — аренда. Без оценки места — серый.
+    const rgb = l.assess ? rampRgb(liquidityT(l.assess.liquidity)) : [158, 158, 158];
+    // буква белая на тёмном фоне, тёмная — на светлом
+    const light = 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2] > 150;
     L.marker([l.lat, l.lon], {
-      icon: L.divIcon({ className: 'cm-l-marker cm-l-' + l.deal, iconSize: [14, 14] }),
+      icon: L.divIcon({
+        className: 'cm-l-marker',
+        html: `<span style="background:rgb(${rgb.map(Math.round)});color:${light ? '#1e2a38' : '#fff'}">`
+              + `${l.deal === 'sale' ? 'П' : 'А'}</span>`,
+        iconSize: [18, 18],
+      }),
       title: `${DEAL_TITLE[l.deal]}: ${l.address}`,
-    }).bindPopup(`<div class="cm-popup"><h4>Объявление</h4>${listingHtml(l)}</div>`, { maxWidth: 360 })
+      zIndexOffset: 1000,
+    }).on('click', () => openCard([l.lat, l.lon], listingPopupHtml(l)))
       .addTo(listingLayer);
   }
+}
+
+/* Положение ликвидности на текущей цветовой шкале. Если на карте выбран
+   другой показатель, шкала у него своя — тогда берём ликвидность как есть. */
+function liquidityT(liq) {
+  return $('cm-metric').value === 'liquidity' ? Math.max(0, Math.min(1, norm(liq * 100))) : liq;
+}
+
+function listingPopupHtml(l) {
+  const row = (k, v) => `<tr><td>${k}</td><td><b>${v}</b></td></tr>`;
+  const pct = v => fmtInt.format(v * 100);
+  const a = l.assess;
+  const per = fmtInt.format(listingPerM2(l));
+  const sale = l.deal === 'sale';
+  const priceTxt = sale ? `${money(l.price)} (${per} ₽/м²)` : `${money(l.price)} в мес. (${per} ₽/м²)`;
+  const src = /^https?:\/\//.test(l.url)
+    ? `<a href="${esc(l.url)}" target="_blank" rel="noopener">объявление на ${esc(l.source || 'сайте')}</a>`
+    : esc(l.source || '');
+  let model = '';
+  if (a) {
+    const m = sale ? `${money(a.model_total)} (${fmtInt.format(a.model_m2)} ₽/м²)`
+                   : `${money(a.model_total)} в мес. (${fmtInt.format(a.model_m2)} ₽/м²)`;
+    const d = a.diff == null ? '' : ` · объявление ${a.diff >= 0 ? 'дороже' : 'дешевле'} на ${fmtInt.format(Math.abs(a.diff) * 100)} %`;
+    const f = a.factors, n = a.near;
+    model = `
+      ${row('Оценка модели', m + `<span class="cm-dim">${d}</span>`)}
+      ${row('Ликвидность места', pct(a.liquidity) + ' из 100')}
+    </table>
+    <div style="font-size:11px;color:#666;margin-top:4px;">
+      Факторы: нас. пункт ${pct(f.f_set)} · центр ${pct(f.f_center)} · спрос ${pct(f.f_demand)} ·
+      транспорт ${pct(f.f_transport)} · дорога ${pct(f.f_road)} · коммерция ${pct(f.f_cluster)} ·
+      конкуренция ${pct(f.f_comp)}<br>
+      Взяты у ближайшего объекта OSM в ${fmtInt.format(n.dist_m)} м:
+      <a href="https://www.openstreetmap.org/${esc(n.osm_type)}/${n.osm_id}" target="_blank" rel="noopener">${esc(n.name || 'без названия')}</a>
+    </div>`;
+  } else {
+    model = `</table><div class="cm-dim" style="font-size:11px;margin-top:4px;">
+      Рядом (в 500 м) нет объектов с факторами — ликвидность и оценку модели посчитать не из чего.</div>`;
+  }
+  return `<div class="cm-popup">
+    <h4>${esc(l.type || state.categories[l.category])} — ${DEAL_TITLE[l.deal]}</h4>
+    <table>
+      ${row('Категория', esc(state.categories[l.category]) + ' · реальное объявление')}
+      ${row('Адрес', esc(l.address) + (l.city ? ', ' + esc(l.city) : '')
+            + (l.geo ? `<br><span class="cm-dim">${GEO_TITLE[l.geo]}</span>` : ''))}
+      ${a && a.near.settlement ? row('Нас. пункт', esc(a.near.settlement)
+            + (a.near.dist_center_km != null ? ` · ${fmt1.format(a.near.dist_center_km)} км до центра` : '')) : ''}
+      ${row('Площадь', fmtInt.format(l.area) + ' м²')}
+      ${row(sale ? 'Цена продажи' : 'Аренда', priceTxt)}
+      ${row('Источник', src + (l.date ? `, ${esc(l.date)}` : ''))}
+      ${model}
+  </div>`;
 }
 
 async function loadCalibration() {

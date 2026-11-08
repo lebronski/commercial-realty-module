@@ -178,7 +178,7 @@ def _run_import(store, region, timeout, servers):
 # ------------------------------------------------------------------
 
 SEED_CSV = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'seed',
-                        'listings_yoshkar-ola_2026-10.csv')
+                        'listings_mari-el_2026-11.csv')
 
 
 def _geocode(store, items):
@@ -354,9 +354,12 @@ def create_blueprint(store, layout_resolver):
                 key = calibration.normalize_address(o['address'])
                 if key and key[1]:
                     by_addr.setdefault(key, []).append(o['id'])
+        assess = calibration.assess_listings(items, _object_rows(store),
+                                             _rates(store))
         for it in items:
             key = calibration.normalize_address(it['address'])
             it['object_ids'] = by_addr.get(key, []) if key else []
+            it['assess'] = assess.get(it['id'])
         return jsonify({'listings': items, 'deals': calibration.DEALS,
                         'has_seed': os.path.isfile(SEED_CSV)})
 

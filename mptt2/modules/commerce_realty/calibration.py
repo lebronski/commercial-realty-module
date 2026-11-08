@@ -215,24 +215,75 @@ def parse_csv(text):
 #  Калибровка
 # ------------------------------------------------------------------
 
+def _object_grid(objects):
+    grid = Grid()
+    for o in objects:
+        grid.add(o['lat'], o['lon'], o)
+    return grid
+
+
+def _nearest(grid, lat, lon):
+    """Ближайший объект с факторами в FACTOR_RADIUS_M: (объект, метры) или (None, None)."""
+    best, best_d = None, None
+    for d, o in grid.near(lat, lon, FACTOR_RADIUS_M):
+        if best_d is None or d < best_d:
+            best, best_d = o, d
+    return best, best_d
+
+
+def assess_listings(listings, objects, rates):
+    """
+    Для каждого объявления на карте — оценка места по модели: факторы
+    и ликвидность берутся у ближайшего объекта (как в калибровке), цена —
+    по текущим ставкам для той же категории, сделки и площади.
+    Возвращает {id объявления: оценка}.
+    """
+    grid = _object_grid(objects)
+    out = {}
+    for l in listings:
+        if l.get('lat') is None:
+            continue
+        best, dist = _nearest(grid, l['lat'], l['lon'])
+        if best is None:
+            continue
+        cat = l['category']
+        liq = liquidity(best, cat)
+        k_price, k_rent = price_multipliers(best['f_set'], liq, l['area'])
+        field = 'price' if l['deal'] == 'sale' else 'rent'
+        rate = (rates.get(cat) or DEFAULT_RATES[cat])[field]
+        model_m2 = rate * (k_price if field == 'price' else k_rent)
+        real_m2 = l['price'] / l['area']
+        out[l['id']] = {
+            'liquidity': round(liq, 3),
+            'factors': {k: best[k] for k in ('f_set', 'f_center', 'f_demand',
+                                             'f_transport', 'f_road',
+                                             'f_cluster', 'f_comp')},
+            'model_m2': round(model_m2),
+            'model_total': round(model_m2 * l['area'], -2),
+            'diff': round(real_m2 / model_m2 - 1, 3) if model_m2 else None,
+            'near': {'id': best['id'], 'name': best.get('name') or '',
+                     'osm_type': best.get('osm_type'),
+                     'osm_id': best.get('osm_id'),
+                     'dist_m': round(dist),
+                     'settlement': best.get('settlement') or '',
+                     'dist_center_km': best.get('dist_center_km')},
+        }
+    return out
+
+
 def calibrate(listings, objects, current_rates):
     """
     listings — объявления с lat/lon (после geocode), objects — объекты
     модуля с факторами. Возвращает отчёт и новые ставки.
     """
-    grid = Grid()
-    for o in objects:
-        grid.add(o['lat'], o['lon'], o)
+    grid = _object_grid(objects)
 
     implied = {}     # (группа, сделка) → [отношение к ставке по умолчанию]
     used = []
     for l in listings:
         if l.get('lat') is None:
             continue
-        best, best_d = None, None
-        for d, o in grid.near(l['lat'], l['lon'], FACTOR_RADIUS_M):
-            if best_d is None or d < best_d:
-                best, best_d = o, d
+        best, _d = _nearest(grid, l['lat'], l['lon'])
         if best is None:
             continue
         cat = l['category']

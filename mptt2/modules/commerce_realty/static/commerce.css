@@ -68,9 +68,11 @@ details.cm-card[open] > summary { margin-bottom: 12px; }
 }
 .cm-ramp {
   height: 10px; border-radius: 3px; margin: 4px 0;
-  background: linear-gradient(to right, #ffffb2, #fecc5c, #fd8d3c, #f03b20, #bd0026);
+  background: linear-gradient(to right, #1a9850, #91cf60, #fee08b, #fc8d59, #d73027);
 }
 .cm-ends { display: flex; justify-content: space-between; }
+.cm-legend-hover { margin-top: 4px; color: #2c3e50; font-weight: 600; min-height: 1em; }
+.cm-legend-hover:empty { display: none; }
 
 .cm-table-wrap { overflow-x: auto; }
 .cm-table { width: 100%; border-collapse: collapse; background: #fff; }
@@ -109,11 +111,21 @@ details.cm-card[open] > summary { margin-bottom: 12px; }
 
 /* Реальные объявления */
 .cm-badge-l { background: #e3f2fd; color: #1565c0; cursor: help; }
-.cm-l-marker { border-radius: 3px; border: 2px solid #fff; box-shadow: 0 0 0 1px #1e3a5f; }
-.cm-l-sale { background: #1565c0; }
-.cm-l-rent { background: #7b1fa2; }
-.cm-root .cm-l-key { display: inline-block; width: 12px; height: 12px; border-radius: 2px;
-  background: linear-gradient(135deg, #1565c0 50%, #7b1fa2 50%); }
+/* Объявление на карте: квадрат (объекты — круги), цвет задаётся из скрипта по ликвидности,
+   буква — сделка. Тёмная рамка и белый ободок — чтобы квадрат читался на заливке любого цвета. */
+.cm-l-marker span {
+  display: flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; box-sizing: border-box;
+  border-radius: 3px; border: 2px solid #fff; box-shadow: 0 0 0 1.5px #1e2a38;
+  font: 700 10px/1 system-ui, "Segoe UI", Arial, sans-serif; color: #1e2a38;
+}
+.cm-root .cm-l-key {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px; margin-right: 2px; border-radius: 3px;
+  border: 2px solid #fff; box-shadow: 0 0 0 1px #1e2a38;
+  background: linear-gradient(135deg, #91cf60, #fc8d59);
+  font: 700 9px/1 system-ui, "Segoe UI", Arial, sans-serif; color: #1e2a38;
+}
 .cm-l-box { margin: 6px 0; padding: 6px 8px; background: #f3f8fd; border-radius: 4px; font-size: 12px; }
 .cm-l-item { margin-top: 4px; font-size: 12px; line-height: 1.35; }
 .cm-l-item + .cm-l-item { border-top: 1px solid #dde6ee; padding-top: 4px; }

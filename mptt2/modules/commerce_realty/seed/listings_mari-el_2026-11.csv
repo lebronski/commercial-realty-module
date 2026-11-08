@@ -1,0 +1,154 @@
+deal;category;type;address;city;area_m2;price_rub;source;url;date
+sale;retail;Помещение свободного назначения;ул. Луначарского, 52;Йошкар-Ола;288;18000000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;industrial;Производственное помещение;ул. Луначарского, 52;Йошкар-Ола;1000;35000000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;industrial;Производственная база;ул. Артема;Йошкар-Ола;1463;75000000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;retail;Торговая площадь (ТЦ);ул. Первомайская, 111;Йошкар-Ола;8;650000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;office;Помещение свободного назначения (офис);ул. Шумелева, 10;Йошкар-Ола;156;21000000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;retail;Помещение свободного назначения;ул. Старосельская, 50;Новинки;406;6500000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;retail;Помещение свободного назначения;ул. Луначарского, 26;Йошкар-Ола;617;28000000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;industrial;Производственное помещение;ул. Строителей, 98;Йошкар-Ола;3845;60000000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;retail;Помещение свободного назначения;ул. Лебедева, 59;Йошкар-Ола;204;19990000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;retail;Помещение свободного назначения;ул. Якова Эшпая, 156а;Йошкар-Ола;99;5500000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;retail;Помещение свободного назначения;ул. Центральная, 1а;Гари;51;4790000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;retail;Помещение свободного назначения;ул. Карла Либкнехта, 106д;Йошкар-Ола;836;110000000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;retail;Торговая площадь (ТРЦ);ул. Пушкина, 34а;Йошкар-Ола;40;2180000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;office;Здание;ул. Баумана, 7;Йошкар-Ола;310;30000000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;industrial;Производственное помещение;ул. Ленинградская, 2д;Йошкар-Ола;400;16500000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;office;Здание;ул. Ползунова, 46;Йошкар-Ола;1500;65000000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;industrial;Производственный комплекс;Кокшайский проезд, 52а;Йошкар-Ола;2232;33000000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;retail;Помещение свободного назначения;ул. Прохорова, 36;Йошкар-Ола;318;19000000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;food;Помещение свободного назначения (караоке-бар);Красноармейская слобода, 57;Йошкар-Ола;250;4900000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;service;Помещение свободного назначения (медицинское);ул. Советская, 5а;Медведево;1396;146580000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;office;Помещение свободного назначения (офисное здание);ул. Пугачева, 1;Йошкар-Ола;665;13300000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;retail;Торговая площадь (киоск);бульвар Победы, 23/1;Йошкар-Ола;12;3000000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;retail;Помещение свободного назначения;ул. Зеленая, 1кв;Йошкар-Ола;180;10000000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;office;Офисное помещение;Ленинский проспект, 30б;Йошкар-Ола;89;8170000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;retail;Помещение свободного назначения;ул. Якова Эшпая, 156ка;Йошкар-Ола;99;6500000;Акула;https://yoshkarola.akula.com/kupit/;2026-10-17
+sale;retail;Торговое помещение;ул. Карла Либкнехта, 13;Йошкар-Ола;55.36;6643200;Этажи;https://yoshkar-ola.etagi.com/commerce/;2026-10-17
+sale;office;Офис;ул. Гончарова, 16;Йошкар-Ола;34.2;3500000;Этажи;https://yoshkar-ola.etagi.com/commerce/;2026-10-17
+sale;office;Офис;бульвар Чавайна, 36;Йошкар-Ола;34.6;3300000;Этажи;https://yoshkar-ola.etagi.com/commerce/;2026-10-17
+rent;retail;Торговая площадь;ул. Петрова, 25А;Йошкар-Ола;80;85000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Помещение свободного назначения;ул. Комсомольская, 120;Йошкар-Ола;147;220000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;industrial;Производственное помещение;ул. Прохорова, 39;Йошкар-Ола;190;49400;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Помещение свободного назначения;ул. Первомайская, 164;Йошкар-Ола;75;65000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;industrial;Производственное помещение;ул. Ленинградская, 2д;Йошкар-Ола;400;140000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;industrial;Производственное помещение;ул. Чехова, 7;Йошкар-Ола;520;108000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;industrial;Производственное помещение;ул. Мира, 30;Йошкар-Ола;2100;483000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;industrial;Производственное помещение;Сернурский тракт, 4;Йошкар-Ола;100;50000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Помещение свободного назначения;ул. Анциферова, 7кБ;Йошкар-Ола;100;60000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Торговая площадь;ул. Комсомольская, 7;Йошкар-Ола;400;280000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Помещение свободного назначения;ул. Карла Маркса, 109г;Йошкар-Ола;140;98000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Помещение свободного назначения;ул. Советская, 5ка;Йошкар-Ола;60;36000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Помещение свободного назначения;бульвар Чавайна, 45;Йошкар-Ола;62;124000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Помещение свободного назначения;ул. Советская, 5а;Йошкар-Ола;72;43200;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;office;Офисное помещение;Ленинский проспект, 68;Йошкар-Ола;24;22000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Торговая площадь;ул. Свердлова, 49;Йошкар-Ола;51;30600;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;office;Офисное помещение;ул. Соловьева, 3;Йошкар-Ола;50;17500;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;industrial;Производственное помещение;ул. Чехова, 10;Йошкар-Ола;400;80000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Торговая площадь;ул. Палантая, 114б;Йошкар-Ола;22;20000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Помещение свободного назначения;ул. Прохорова, 49;Йошкар-Ола;133;39900;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;office;Офисное помещение;ул. Анциферова, 7б;Йошкар-Ола;50;25000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Помещение свободного назначения;ул. Красноармейская, 105;Йошкар-Ола;150;90000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Торговая площадь;ул. Меримского, 6;Йошкар-Ола;95;85500;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;office;Офисное помещение;Красноармейская слобода, 57;Йошкар-Ола;27;17615;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Помещение свободного назначения;ул. Советская, 142;Йошкар-Ола;100;110000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Помещение свободного назначения;ул. Машиностроителей, 61;Йошкар-Ола;104;83200;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Помещение свободного назначения;ул. Васильева, 4;Йошкар-Ола;36;17000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;warehouse;Складское помещение;ул. Суворова, 9а;Йошкар-Ола;1000;350000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Помещение свободного назначения;ул. Первомайская, 181;Йошкар-Ола;42;42000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Помещение свободного назначения;Ленинский проспект, 41;Йошкар-Ола;15;45000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/;2026-10-17
+rent;retail;Свободное назначение;ул. Карла Либкнехта, 106д;Йошкар-Ола;293.3;235000;Этажи;https://yoshkar-ola.etagi.com/commerce/arenda/;2026-10-17
+rent;retail;Свободное назначение;ул. Волкова, 58;Йошкар-Ола;61.5;30000;Этажи;https://yoshkar-ola.etagi.com/commerce/arenda/;2026-10-17
+rent;retail;Торговое помещение;ул. Якова Эшпая, 139;Йошкар-Ола;45;50000;Этажи;https://yoshkar-ola.etagi.com/commerce/arenda/;2026-10-17
+rent;retail;Свободное назначение;ул. Красноармейская, 105;Йошкар-Ола;155;110000;Этажи;https://yoshkar-ola.etagi.com/commerce/arenda/;2026-10-17
+rent;retail;Свободное назначение;ул. Меримского, 6;Йошкар-Ола;102.8;71960;Этажи;https://yoshkar-ola.etagi.com/commerce/arenda/;2026-10-17
+rent;retail;Свободное назначение;ул. Зои Космодемьянской, 132;Йошкар-Ола;198.7;50000;Этажи;https://yoshkar-ola.etagi.com/commerce/arenda/;2026-10-17
+sale;retail;Помещения свободного назначения;ул Дружбы, 6кА;Йошкар-Ола;400.0;31000000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/ulica-druzhby-6ka-r13278265.html;2026-11-03
+sale;retail;Помещения свободного назначения;Старосельская улица, 50;Новинск;406.0;6500000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/staroselskaya-ulica-50-r13218882.html;2026-10-08
+sale;retail;Помещения свободного назначения;улица Корта, 2б;Корта;66.0;4990000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/rossiya-respublika-mariy-el-kuyarskoe-selskoe-poselenie-derevnya-korta-ulica-korta-2b-r13289614.html;2026-11-07
+sale;retail;Торговой площади;ул Кремлёвская, 19;Йошкар-Ола;24.0;1300000;Акула;https://yoshkarola.akula.com/kupit/torgovogo/pomescheniya/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-kremlevskaya-ulica-19-r13289640.html;2026-11-07
+sale;retail;Торговой площади;ул Первомайская, 111;Йошкар-Ола;8.0;599000;Акула;https://yoshkarola.akula.com/kupit/torgovogo/pomescheniya/pervomayskaya-ulica-111-r12698002.html;2026-11-03
+sale;industrial;Производственного комплекса;проезд Кокшайский, 52а;Йошкар-Ола;2232.0;30000000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/proezd-kokshayskiy-d-52a-r12381350.html;2026-10-20
+sale;retail;Помещения свободного назначения;Красноармейская сл, 57;Йошкар-Ола;250.0;3999000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/krasnoarmeyskaya-sl-57-r13062115.html;2026-11-08
+sale;retail;Помещения свободного назначения;ул Советская, 5а;Йошкар-Ола;1396.0;146580000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/sovetskaya-ulica-d-5a-r12115180.html;2026-10-16
+sale;retail;Помещения свободного назначения;Центральная улица, 3;Петриково;73.0;5500000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/centralnaya-ulica-3-r12811700.html;2026-10-17
+rent;office;Здание;ул Зарубина, 53б;Йошкар-Ола;51.0;45000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/zarubina-ulica-d-53b-r12321832.html;2026-10-16
+rent;retail;Торговую площадь;ул Палантая;Йошкар-Ола;22.0;20000;Акула;https://yoshkarola.akula.com/arenda/torgovogo/pomescheniya/ulica-palantaya-114b-r12901674.html;2026-06-22
+rent;retail;Помещение свободного назначения;ул Советская, 161;Йошкар-Ола;193.0;192700;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/svobodnogo/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-sovetskaya-ulica-161-r12504846.html;2026-05-09
+rent;retail;Помещение свободного назначения;ул Якова Эшпая, 156а;Йошкар-Ола;80.0;65000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/svobodnogo/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-ulica-yakova-eshpaya-156a-r12505656.html;2026-05-09
+rent;office;Офисное помещение;ул Пушкина, 30;Йошкар-Ола;32.0;30400;Акула;https://yoshkarola.akula.com/arenda/ofis/pomescheniya/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-ulica-pushkina-30-r12722754.html;2026-05-09
+rent;retail;Помещение свободного назначения;пр-кт Воскресенский;Йошкар-Ола;91.0;75000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/svobodnogo/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-voskresenskiy-prospekt-1-r12504967.html;2026-05-09
+rent;retail;Помещение свободного назначения;жилой комплекс Новый Арт Сити, 24.;Семёновка;60.0;57000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/svobodnogo/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-selo-semenovka-zhiloy-kompleks-novyy-art-siti-24-r12504742.html;2026-05-09
+rent;retail;Помещение свободного назначения;ул Советская, 76;Йошкар-Ола;137.0;72000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/svobodnogo/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-sovetskaya-ulica-76-r12506067.html;2026-05-09
+rent;retail;Торговую площадь;ул Йывана Кырли, 21б;Йошкар-Ола;71.0;57000;Акула;https://yoshkarola.akula.com/arenda/torgovogo/pomescheniya/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-ulica-yyvana-kyrli-21b-r12504649.html;2026-05-09
+rent;retail;Помещение свободного назначения;б-р Чавайна, 16;Йошкар-Ола;60.0;120000;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/svobodnogo/bulvar-chavayna-d-16-r12882752.html;2026-06-03
+rent;retail;Торговую площадь;ул Палантая;Йошкар-Ола;50.0;75000;Акула;https://yoshkarola.akula.com/arenda/torgovogo/pomescheniya/palantaya-ul-r13290249.html;2026-11-08
+sale;retail;Торговой площади;ул Первомайская, 90;Йошкар-Ола;175.0;15000000;Акула;https://yoshkarola.akula.com/kupit/torgovogo/pomescheniya/pervomayskaya-ulica-d-90-r8592126.html;2026-09-22
+sale;retail;Помещения свободного назначения;ул Зеленая, 1в;Йошкар-Ола;180.0;9800000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/zelenaya-ulica-d-1v-r12422306.html;2026-10-16
+sale;retail;Торговой площади;улица Степана Лебедева, 19;Куженер;236.0;4400000;Акула;https://yoshkarola.akula.com/kupit/torgovogo/pomescheniya/rossiya-respublika-mariy-el-gorodskoe-poselenie-kuzhener-poselok-gorodskogo-tipa-kuzhener-ulica-stepana-lebedeva-19-r12504888.html;2026-05-09
+sale;retail;Торговой площади;пр-кт Ленинский, 11е;Йошкар-Ола;953.0;89900000;Акула;https://yoshkarola.akula.com/kupit/torgovogo/pomescheniya/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-leninskiy-prospekt-11e-r12505497.html;2026-05-09
+sale;retail;Торговой площади;ул Анциферова, 8а;Йошкар-Ола;52.0;5350000;Акула;https://yoshkarola.akula.com/kupit/torgovogo/pomescheniya/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-ulica-anciferova-8a-r12506013.html;2026-10-14
+sale;office;Офисного помещения;ул Строителей, 44а;Йошкар-Ола;100.0;11956000;Акула;https://yoshkarola.akula.com/kupit/ofis/pomescheniya/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-ulica-stroiteley-44a-r12506028.html;2026-08-22
+sale;retail;Торговой площади;ул Мира, 34;Йошкар-Ола;274.0;13500000;Акула;https://yoshkarola.akula.com/kupit/torgovogo/pomescheniya/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-ulica-mira-34-r12505501.html;2026-05-09
+sale;retail;Торговой площади;улица Медведево, 5а;Медведево;1392.0;146149500;Акула;https://yoshkarola.akula.com/kupit/torgovogo/pomescheniya/rossiya-respublika-mariy-el-gorodskoe-poselenie-medvedevo-poselok-gorodskogo-tipa-medvedevo-ulica-medvedevo-5a-r12505505.html;2026-05-09
+sale;industrial;Производственного помещения;ул Ломоносова, 4;Йошкар-Ола;3686.0;26000000;Акула;https://yoshkarola.akula.com/kupit/proizvod/pomescheniya/lomonosova-ulica-d-4-r13219715.html;2026-10-15
+sale;retail;Помещения свободного назначения;ул Красноармейская, 117;Йошкар-Ола;5000.0;180000000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/krasnoarmeyskaya-ulica-d-117-r8543283.html;2026-09-22
+sale;retail;Помещения свободного назначения;ул Чехова, 55;Йошкар-Ола;96.0;17691550;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/chehova-ulica-d-51-r9355890.html;2026-09-22
+sale;office;Офисного помещения;ул Машиностроителей, 59;Йошкар-Ола;139.0;29960000;Акула;https://yoshkarola.akula.com/kupit/ofis/pomescheniya/mashinostroiteley-ulica-d-59-r12197518.html;2026-08-20
+sale;office;Офисного помещения;ул Кирпичная, 3а;Йошкар-Ола;153.0;11850000;Акула;https://yoshkarola.akula.com/kupit/ofis/pomescheniya/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-kirpichnaya-ulica-3a-r12504960.html;2026-05-09
+sale;office;Офисного помещения;ул Анциферова, 46;Йошкар-Ола;309.0;14900000;Акула;https://yoshkarola.akula.com/kupit/ofis/pomescheniya/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-ulica-anciferova-46-r12504800.html;2026-05-09
+sale;office;Офисного помещения;б-р Чавайна, 36;Йошкар-Ола;20.0;2450000;Акула;https://yoshkarola.akula.com/kupit/ofis/pomescheniya/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-bulvar-chavayna-36-r12504594.html;2026-08-18
+sale;office;Офисного помещения;б-р Чавайна, 36;Йошкар-Ола;60.0;4500000;Акула;https://yoshkarola.akula.com/kupit/ofis/pomescheniya/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-bulvar-chavayna-36-r12504723.html;2026-10-15
+sale;office;Офисного помещения;ул Комсомольская, 5;Йошкар-Ола;167.0;3500000;Акула;https://yoshkarola.akula.com/kupit/ofis/pomescheniya/rossiya-respublika-mariy-el-kundyshskoe-selskoe-poselenie-poselok-silikatnyy-komsomolskaya-ulica-5-r12505532.html;2026-05-09
+rent;retail;Торговую площадь;ул Палантая;Йошкар-Ола;30.0;45000;Акула;https://yoshkarola.akula.com/arenda/torgovogo/pomescheniya/palantaya-ul-r13290250.html;2026-11-08
+rent;retail;Помещение под магазин;ул Палантая;Йошкар-Ола;20.0;30000;Акула;https://yoshkarola.akula.com/arenda/torgovogo/pomescheniya/palantaya-ul-r13290251.html;2026-11-08
+rent;retail;Помещение под магазин;ул Гончарова, 27;Йошкар-Ола;124.0;68450;Акула;https://yoshkarola.akula.com/arenda/pomescheniya/svobodnogo/goncharova-ul-27-r12586644.html;2026-10-24
+sale;retail;Помещение под магазин;квартал № 28, 15;СНТ Подборное;29.0;2600000;Акула;https://yoshkarola.akula.com/kupit/torgovogo/pomescheniya/rossiya-respublika-mariy-el-sidorovskoe-selskoe-poselenie-snt-podbornoe-kvartal-28-15-r12914496.html;2026-10-22
+sale;retail;Помещение под магазин;ул Советская, 30а;Йошкар-Ола;129.0;15800000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/rossiya-respublika-mariy-el-gorodskoe-poselenie-medvedevo-poselok-gorodskogo-tipa-medvedevo-sovetskaya-ulica-30a-r12504650.html;2026-08-20
+sale;retail;Помещение под магазин;проезд Кокшайский, 32;Йошкар-Ола;1000.0;199000000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-kokshayskiy-proezd-32-r12505758.html;2026-05-23
+sale;retail;Помещение под магазин;ул Зои Космодемьянской, 132;Йошкар-Ола;199.0;7900000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-ulica-zoi-kosmodemyanskoy-132-r12866993.html;2026-11-07
+sale;retail;Помещение под магазин;ул Медицинская, 13б;Йошкар-Ола;90.0;6950000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-medicinskaya-ulica-13b-r12505321.html;2026-08-21
+sale;retail;Помещение под магазин;Полевая улица, 4;Медведево;88.0;4600000;Акула;https://yoshkarola.akula.com/kupit/torgovogo/pomescheniya/rossiya-respublika-mariy-el-gorodskoe-poselenie-medvedevo-poselok-gorodskogo-tipa-medvedevo-polevaya-ulica-4-r12504622.html;2026-10-15
+sale;retail;Помещение под магазин;улица Сергея Жилина, 4;Медведево;70.0;5600000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/rossiya-respublika-mariy-el-gorodskoe-poselenie-medvedevo-poselok-gorodskogo-tipa-medvedevo-ulica-sergeya-zhilina-4-r12504906.html;2026-06-10
+sale;food;Помещение под бар;Набережная улица, 6;Малый Кугунур;880.0;55000000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/rossiya-respublika-mariy-el-markovskoe-selskoe-poselenie-derevnya-malyy-kugunur-naberezhnaya-ulica-6-r12505791.html;2026-05-09
+sale;retail;Помещение под медицинские услуги;ул Советская, 142;Йошкар-Ола;100.0;17000000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/sovetskaya-ulica-d-142-r13137393.html;2026-10-31
+sale;retail;Помещение под медицинские услуги;ул Свердлова, 50;Йошкар-Ола;477.0;25000000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-ulica-sverdlova-50-r12506117.html;2026-05-23
+sale;retail;Помещение под образовательные услуги;ул Эшкинина, 25;Йошкар-Ола;122.0;18315000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-ulica-eshkinina-25-r12505071.html;2026-05-09
+sale;retail;Помещения свободного назначения;б-р Чавайна, 14;Йошкар-Ола;53.0;7600000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/bulvar-chavayna-d-14-r13180321.html;2026-10-15
+sale;retail;Помещения свободного назначения;ул Степана Разина, 84а;Йошкар-Ола;25.0;2500000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/rossiya-respublika-mariy-el-gorodskoy-okrug-yoshkar-ola-yoshkar-ola-ulica-stepana-razina-84a-r12505303.html;2026-04-16
+sale;retail;Помещения свободного назначения;Новая улица, 11а;Знаменский;174.0;12208000;Акула;https://yoshkarola.akula.com/kupit/pomescheniya/svobodnogo/rossiya-respublika-mariy-el-znamenskoe-selskoe-poselenie-poselok-znamenskiy-novaya-ulica-11a-r12505781.html;2026-03-30
+sale;industrial;Производственного помещения;ул Строителей, 98;Йошкар-Ола;3845.0;65000000;Акула;https://yoshkarola.akula.com/kupit/proizvod/pomescheniya/stroiteley-ulica-d-98-r13107802.html;2026-11-04
+sale;industrial;Производственного помещения;ул Транспортная, 13/5;Йошкар-Ола;290.0;5999999;Акула;https://yoshkarola.akula.com/kupit/proizvod/pomescheniya/transportnaya-ul-13-5-r12304971.html;2026-10-02
+sale;retail;Торговое помещение;Первомайская, 34а;Йошкар-Ола;17;1400000;Этажи;https://yoshkar-ola.etagi.com/commerce/13354743/;2026-11-08
+sale;retail;Свободное назначение;Красноармейская, 105;Йошкар-Ола;155;22000000;Этажи;https://yoshkar-ola.etagi.com/commerce/12896527/;2026-11-08
+sale;retail;Торговое помещение;Советская, 120;Йошкар-Ола;234;35000000;Этажи;https://yoshkar-ola.etagi.com/commerce/12817185/;2026-11-08
+sale;retail;Торговое помещение;Первомайская, 111;Йошкар-Ола;15.4;1100000;Этажи;https://yoshkar-ola.etagi.com/commerce/12202440/;2026-11-08
+sale;retail;Торговое помещение;Первомайская, 111;Йошкар-Ола;49.1;2500000;Этажи;https://yoshkar-ola.etagi.com/commerce/11841020/;2026-11-08
+sale;retail;Свободное назначение;Якова Эшпая, 156а;Йошкар-Ола;99;6650000;Этажи;https://yoshkar-ola.etagi.com/commerce/11711454/;2026-11-08
+sale;retail;Свободное назначение;Пролетарская, 24б;Йошкар-Ола;3.7;315000;Этажи;https://yoshkar-ola.etagi.com/commerce/10926933/;2026-11-08
+sale;retail;Свободное назначение;Машиностроителей, 1;Йошкар-Ола;31.7;4500000;Этажи;https://yoshkar-ola.etagi.com/commerce/10682832/;2026-11-08
+sale;retail;Свободное назначение;Воскресенский проспект, 1;Йошкар-Ола;91;12500000;Этажи;https://yoshkar-ola.etagi.com/commerce/10560865/;2026-11-08
+sale;retail;Свободное назначение;Строителей, 95к103с3;Йошкар-Ола;377;8900000;Этажи;https://yoshkar-ola.etagi.com/commerce/10498087/;2026-11-08
+sale;office;Офис;Фестивальная, 58а;Йошкар-Ола;163.5;19300000;Этажи;https://yoshkar-ola.etagi.com/commerce/10094058/;2026-11-08
+sale;retail;Торговое помещение;Красноармейская, 42а;Йошкар-Ола;44.5;3550000;Этажи;https://yoshkar-ola.etagi.com/commerce/9925702/;2026-11-08
+sale;retail;Свободное назначение;Кирпичная, 3а;Йошкар-Ола;158.7;13000000;Этажи;https://yoshkar-ola.etagi.com/commerce/9752351/;2026-11-08
+sale;office;Офис;Пушкина, 34а;Йошкар-Ола;14;1200000;Этажи;https://yoshkar-ola.etagi.com/commerce/13286434/;2026-11-08
+sale;retail;Свободное назначение;Тарханово, 29а;Йошкар-Ола;903;49000000;Этажи;https://yoshkar-ola.etagi.com/commerce/3810474/;2026-11-08
+sale;retail;Свободное назначение;Деповская, 6;Йошкар-Ола;657.4;14900000;Этажи;https://yoshkar-ola.etagi.com/commerce/3264062/;2026-11-08
+sale;retail;Свободное назначение;Первомайская, 76;Йошкар-Ола;36.6;1240000;Этажи;https://yoshkar-ola.etagi.com/commerce/3241328/;2026-11-08
+sale;office;Офис;Победы, 11;Руэм;81.2;9500000;Этажи;https://yoshkar-ola.etagi.com/commerce/13761819/;2026-11-08
+sale;retail;Свободное назначение;Производственная, 44а;Яныково;300;13000000;Этажи;https://yoshkar-ola.etagi.com/commerce/13420483/;2026-11-08
+sale;retail;Свободное назначение;Центральная, 9;Пекшиксола;420;9000000;Этажи;https://yoshkar-ola.etagi.com/commerce/11960618/;2026-11-08
+sale;retail;Свободное назначение;Советская, 30а;Медведево;128.6;15800000;Этажи;https://yoshkar-ola.etagi.com/commerce/10810619/;2026-11-08
+sale;retail;Свободное назначение;Молодёжная, 22а;Семёновка;320.25;32665000;Этажи;https://yoshkar-ola.etagi.com/commerce/3363392/;2026-11-08
+sale;warehouse;Кладовая;Гагарина, 4;Медведево;13700;99000000;Этажи;https://yoshkar-ola.etagi.com/commerce/3246363/;2026-11-08
+rent;retail;Свободное назначение;Воинов-Интернационалистов, 19а;Йошкар-Ола;230;230000;Этажи;https://yoshkar-ola.etagi.com/commerce/12758419/;2026-11-08
+rent;warehouse;Кладовая;Луначарского, 26;Йошкар-Ола;435;170000;Этажи;https://yoshkar-ola.etagi.com/commerce/12456420/;2026-11-08
+rent;office;Офис;Строителей, 94;Йошкар-Ола;140;79800;Этажи;https://yoshkar-ola.etagi.com/commerce/11700227/;2026-11-08
+rent;office;Офис;Строителей, 94;Йошкар-Ола;240;136800;Этажи;https://yoshkar-ola.etagi.com/commerce/11698699/;2026-11-08
+rent;retail;Свободное назначение;Воскресенский проспект, 1;Йошкар-Ола;91;75000;Этажи;https://yoshkar-ola.etagi.com/commerce/9978569/;2026-11-08
+rent;warehouse;Кладовая;Карла Маркса, 131г/1;Йошкар-Ола;500;225000;Этажи;https://yoshkar-ola.etagi.com/commerce/12261210/;2026-11-08
+rent;retail;Свободное назначение;Зарубина, 12;Йошкар-Ола;115;92000;Этажи;https://yoshkar-ola.etagi.com/commerce/7664246/;2026-11-08
+rent;office;Офис;Свердлова, 54;Йошкар-Ола;128;83200;Этажи;https://yoshkar-ola.etagi.com/commerce/6795613/;2026-11-08
+rent;retail;Торговое помещение;Полевая, 4;Медведево;87.9;53000;Этажи;https://yoshkar-ola.etagi.com/commerce/11968840/;2026-11-08
+rent;retail;Торговое помещение;Новая, 11а;Знаменский;63.1;53635;Этажи;https://yoshkar-ola.etagi.com/commerce/7815877/;2026-11-08
