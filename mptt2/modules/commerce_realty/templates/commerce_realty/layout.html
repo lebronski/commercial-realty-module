@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Коммерческая недвижимость{% endblock %}</title>
+<style>
+  body { margin: 0; font-family: system-ui, "Segoe UI", Arial, sans-serif;
+         background: #f4f6f8; color: #222; }
+  .cm-own-header { background: #2c3e50; color: #fff; padding: 12px 24px; }
+  .cm-own-header h1 { font-size: 18px; margin: 0; }
+  .cm-own-main { padding: 20px; }
+</style>
+</head>
+<body>
+<!-- Собственный каркас: используется, если в основном проекте нет base.html
+     с блоком content, и в отдельном режиме (standalone.py). -->
+<header class="cm-own-header"><h1>Коммерческая недвижимость</h1></header>
+<main class="cm-own-main">
+{% block content %}{% endblock %}
+</main>
+</body>
+</html>

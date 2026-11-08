@@ -1,0 +1,120 @@
+/* Все правила ограничены .cm-root и используют свои классы cm-*:
+   страница не зависит от style.css основного проекта и не ломает его. */
+
+.cm-root { box-sizing: border-box; color: #222; font-size: 14px;
+           font-family: system-ui, "Segoe UI", Arial, sans-serif;
+           max-width: 1400px; margin: 0 auto; }
+.cm-root *, .cm-root *::before, .cm-root *::after { box-sizing: inherit; }
+.cm-root h2 { font-size: 22px; margin: 4px 0 8px; color: #2c3e50; }
+.cm-root h3 { font-size: 15px; margin: 0; color: #2c3e50; }
+
+.cm-root button {
+  padding: 7px 14px; border: 1px solid #b0bec5; background: #fff;
+  border-radius: 4px; cursor: pointer; font-size: 14px; color: #222;
+}
+.cm-root button:hover { background: #eceff1; }
+.cm-root button.cm-primary { background: #2980b9; color: #fff; border-color: #2472a4; }
+.cm-root button.cm-primary:hover { background: #3498db; }
+.cm-root button.cm-danger { background: #c0392b; color: #fff; border-color: #922b21; }
+.cm-root button.cm-danger:hover { background: #e74c3c; }
+
+.cm-root input[type=text], .cm-root input[type=number],
+.cm-root select, .cm-root textarea {
+  padding: 6px; border: 1px solid #c3ccd5; border-radius: 4px;
+  font: inherit; background: #fff; color: #222;
+}
+.cm-root input[type=number] { width: 90px; }
+.cm-root input.cm-short { width: 90px; }
+.cm-root textarea { width: 100%; font-family: monospace; font-size: 12px; }
+
+.cm-muted { color: #666; font-size: 13px; margin: 8px 0 14px; }
+
+.cm-card {
+  background: #fff; border: 1px solid #d0d7de; border-radius: 8px;
+  padding: 14px 18px; margin-bottom: 16px;
+}
+details.cm-card > summary { cursor: pointer; font-weight: 600; color: #2c3e50; font-size: 15px; }
+details.cm-card[open] > summary { margin-bottom: 12px; }
+
+.cm-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+.cm-row label { display: flex; gap: 6px; align-items: center; }
+.cm-row.cm-between { justify-content: space-between; }
+.cm-row .cm-col, .cm-row.cm-col { flex-direction: column; align-items: stretch; width: 100%; }
+
+.cm-progress { height: 14px; background: #ecf0f1; border-radius: 7px; overflow: hidden; margin: 8px 0; }
+.cm-progress-bar { height: 100%; width: 0; background: #3498db; transition: width .3s; }
+.cm-progress-text { display: flex; justify-content: space-between; font-size: 13px; color: #555; margin-bottom: 8px; }
+.cm-log {
+  background: #1e272e; color: #d0d7de; border-radius: 4px; padding: 10px;
+  max-height: 240px; overflow: auto; font-size: 12px; line-height: 1.4;
+  white-space: pre-wrap; margin: 0;
+}
+
+.cm-rates { border-collapse: collapse; }
+.cm-rates td, .cm-rates th { padding: 4px 8px; font-size: 13px; text-align: left; }
+.cm-rates input[type=number] { width: 110px; padding: 4px; }
+
+.cm-summary { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.cm-tile { background: #fff; border: 1px solid #d0d7de; border-radius: 8px; padding: 10px 16px; min-width: 160px; }
+.cm-tile .v { font-size: 20px; font-weight: 600; color: #2c3e50; }
+.cm-tile .l { font-size: 12px; color: #666; }
+
+.cm-map-wrap { position: relative; margin-bottom: 16px; }
+#cm-map { height: 560px; border: 1px solid #d0d7de; border-radius: 6px; }
+#cm-legend {
+  position: absolute; left: 10px; bottom: 24px; z-index: 500;
+  background: rgba(255,255,255,.95); border: 1px solid #d0d7de;
+  border-radius: 6px; padding: 8px 10px; font-size: 12px; min-width: 200px;
+}
+.cm-ramp {
+  height: 10px; border-radius: 3px; margin: 4px 0;
+  background: linear-gradient(to right, #ffffb2, #fecc5c, #fd8d3c, #f03b20, #bd0026);
+}
+.cm-ends { display: flex; justify-content: space-between; }
+
+.cm-table-wrap { overflow-x: auto; }
+.cm-table { width: 100%; border-collapse: collapse; background: #fff; }
+.cm-table th, .cm-table td {
+  border-bottom: 1px solid #e0e0e0; padding: 6px 8px; text-align: left;
+  font-size: 14px; white-space: nowrap;
+}
+.cm-table th { background: #f5f7fa; cursor: pointer; user-select: none; }
+.cm-table th.sorted { background: #dfe6ec; }
+.cm-table td.wrap { white-space: normal; max-width: 260px; }
+.cm-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.cm-table tbody tr { cursor: pointer; }
+.cm-table tbody tr:hover { background: #f0f4f8; }
+.cm-table .empty { color: #999; text-align: center; }
+.cm-pager { display: flex; gap: 10px; align-items: center; font-size: 13px; }
+.cm-bar { display: inline-block; width: 46px; height: 8px; background: #ecf0f1;
+          border-radius: 4px; overflow: hidden; vertical-align: middle; margin-right: 6px; }
+.cm-bar i { display: block; height: 100%; }
+
+/* Всплывающая карточка рисуется Leaflet вне .cm-root */
+.cm-popup table td { padding: 1px 6px 1px 0; font-size: 12px; }
+.cm-popup h4 { margin: 0 0 4px; font-size: 14px; }
+
+/* Компактная таблица: основное значение + строка-уточнение под ним */
+.cm-table td, .cm-table th { vertical-align: top; }
+.cm-table .cm-sub { display: block; font-size: 12px; color: #6b7480; font-weight: normal; margin-top: 2px; white-space: nowrap; }
+.cm-table th .cm-sub { color: #8a939c; }
+.cm-table td.cm-w-obj { min-width: 170px; max-width: 240px; }
+.cm-table td.cm-w-addr { min-width: 170px; max-width: 250px; }
+.cm-table td.wrap .cm-sub { white-space: normal; }
+.cm-dim { color: #8a939c; }
+.cm-badge { display: inline-block; font-size: 11px; padding: 0 6px; border-radius: 8px;
+            background: #e8f5e9; color: #2e7d32; vertical-align: middle; }
+.cm-sortbox { display: flex; gap: 6px; align-items: center; font-size: 13px; margin-left: auto; }
+.cm-sortbox button { padding: 5px 10px; font-size: 13px; }
+
+/* Реальные объявления */
+.cm-badge-l { background: #e3f2fd; color: #1565c0; cursor: help; }
+.cm-l-marker { border-radius: 3px; border: 2px solid #fff; box-shadow: 0 0 0 1px #1e3a5f; }
+.cm-l-sale { background: #1565c0; }
+.cm-l-rent { background: #7b1fa2; }
+.cm-root .cm-l-key { display: inline-block; width: 12px; height: 12px; border-radius: 2px;
+  background: linear-gradient(135deg, #1565c0 50%, #7b1fa2 50%); }
+.cm-l-box { margin: 6px 0; padding: 6px 8px; background: #f3f8fd; border-radius: 4px; font-size: 12px; }
+.cm-l-item { margin-top: 4px; font-size: 12px; line-height: 1.35; }
+.cm-l-item + .cm-l-item { border-top: 1px solid #dde6ee; padding-top: 4px; }
+.cm-calib td { white-space: normal; font-size: 13px; }

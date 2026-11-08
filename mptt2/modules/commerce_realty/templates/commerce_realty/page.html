@@ -1,0 +1,164 @@
+{% extends layout %}
+{% block title %}Коммерческая недвижимость{% endblock %}
+
+{#
+  Вся разметка, стили и скрипты — внутри блока content: от каркаса
+  страницы основного проекта нужен только этот блок.
+#}
+{% block content %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="{{ url_for('.static', filename='commerce.css') }}">
+
+<div class="cm-root" id="cm-root" data-base="{{ url_for('.page') }}">
+
+<h2>Коммерческая недвижимость: покупка и доход от аренды</h2>
+<p class="cm-muted">
+  Объекты берутся из OpenStreetMap через Overpass API. Цена покупки и доход от аренды —
+  <b>модельная оценка</b>: базовая ставка категории × коэффициент населённого пункта ×
+  индекс ликвидности × поправка на площадь. Это не цены из объявлений.
+</p>
+
+<details class="cm-card" id="cm-settings-card">
+  <summary>Данные и параметры модели</summary>
+
+  <div class="cm-row">
+    <label>Регион (код ISO 3166-2):
+      <input type="text" id="cm-region" class="cm-short">
+    </label>
+    <label>Таймаут запроса, с:
+      <input type="number" id="cm-timeout" min="30" max="900">
+    </label>
+    <label>Операционные расходы, %:
+      <input type="number" id="cm-opex" min="0" max="90" step="1">
+    </label>
+  </div>
+
+  <table class="cm-rates">
+    <thead><tr><th>Категория</th><th>Покупка, ₽/м²</th><th>Аренда, ₽/м² в мес.</th></tr></thead>
+    <tbody id="cm-rates-body"></tbody>
+  </table>
+  <p class="cm-muted">Ставки заданы для центра крупнейшего города региона.</p>
+
+  <div class="cm-row cm-col">
+    <label class="cm-col">Серверы Overpass (по одному в строке, первый — приоритетный):
+      <textarea id="cm-servers" rows="4"></textarea>
+    </label>
+  </div>
+
+  <div class="cm-row">
+    <button type="button" id="cm-save">Сохранить и пересчитать</button>
+    <button type="button" id="cm-import" class="cm-primary">Загрузить данные из Overpass</button>
+    <button type="button" id="cm-clear" class="cm-danger">Удалить данные</button>
+    <a id="cm-export" href="#"><button type="button">Скачать CSV</button></a>
+  </div>
+
+  <div class="cm-progress"><div id="cm-bar" class="cm-progress-bar"></div></div>
+  <div class="cm-progress-text"><span id="cm-message">—</span><span id="cm-counter"></span></div>
+  <pre id="cm-log" class="cm-log"></pre>
+</details>
+
+<details class="cm-card" id="cm-listings-card">
+  <summary>Реальные объявления и калибровка ставок <span id="cm-l-count" class="cm-dim"></span></summary>
+  <p class="cm-muted">
+    Объявления о продаже и аренде привязываются к домам на карте по адресу. По цене за м² в
+    этой точке модель вычисляет, какую базовую ставку подразумевает объявление, и предлагает
+    ставки по медиане для каждой группы категорий. Ставки меняются только по кнопке «Применить».
+  </p>
+  <div class="cm-row">
+    <button type="button" id="cm-l-seed">Загрузить собранные объявления (Йошкар-Ола, октябрь 2026)</button>
+    <a id="cm-l-template" href="#"><button type="button">Шаблон CSV</button></a>
+    <button type="button" id="cm-l-clear" class="cm-danger">Удалить объявления</button>
+  </div>
+  <div class="cm-row">
+    <label>Свой файл CSV: <input type="file" id="cm-l-file" accept=".csv,text/csv"></label>
+    <label><input type="checkbox" id="cm-l-replace"> заменить текущие</label>
+    <button type="button" id="cm-l-upload">Добавить из файла</button>
+  </div>
+  <div id="cm-l-msg" class="cm-muted"></div>
+  <div class="cm-table-wrap"><table class="cm-table cm-calib" id="cm-calib"></table></div>
+  <div class="cm-row">
+    <button type="button" id="cm-l-apply" class="cm-primary">Применить калибровку</button>
+    <button type="button" id="cm-l-reset">Вернуть исходные ставки</button>
+  </div>
+</details>
+
+<div class="cm-summary" id="cm-summary"></div>
+
+<div class="cm-card">
+  <div class="cm-row">
+    <label>Показатель карты:
+      <select id="cm-metric">
+        <option value="liquidity">Ликвидность</option>
+        <option value="cap_rate">Доходность, % годовых</option>
+        <option value="payback">Окупаемость, лет</option>
+        <option value="price_m2">Цена покупки, ₽/м²</option>
+        <option value="rent_m2">Аренда, ₽/м² в мес.</option>
+        <option value="noi_year">Чистый доход, ₽/год</option>
+        <option value="count">Число объектов</option>
+      </select>
+    </label>
+    <label><input type="checkbox" id="cm-show-heat" checked> Тепловая карта</label>
+    <label><input type="checkbox" id="cm-show-points" checked> Объекты (при приближении)</label>
+    <label><input type="checkbox" id="cm-show-listings" checked> <span class="cm-l-key"></span> Объявления</label>
+  </div>
+  <div class="cm-row">
+    <label>Категория: <select id="cm-f-category"><option value="">все</option></select></label>
+    <label>Вид:
+      <select id="cm-f-kind">
+        <option value="">все</option>
+        <option value="здание">здание</option>
+        <option value="помещение">помещение</option>
+      </select>
+    </label>
+    <label>Нас. пункт: <select id="cm-f-settlement"><option value="">все</option></select></label>
+    <label>Поиск: <input type="text" id="cm-f-search" placeholder="название, адрес, тип"></label>
+  </div>
+  <div class="cm-row">
+    <label>Площадь, м²: <input type="number" id="cm-f-area-min" placeholder="от"> – <input type="number" id="cm-f-area-max" placeholder="до"></label>
+    <label>Цена, млн ₽: <input type="number" id="cm-f-price-min" placeholder="от" step="0.1"> – <input type="number" id="cm-f-price-max" placeholder="до" step="0.1"></label>
+    <label>Ликвидность от: <input type="number" id="cm-f-liq" min="0" max="100" placeholder="0–100"></label>
+    <label>Окупаемость до, лет: <input type="number" id="cm-f-payback" step="0.5"></label>
+    <button type="button" id="cm-f-reset">Сбросить</button>
+  </div>
+</div>
+
+<div class="cm-map-wrap">
+  <div id="cm-map"></div>
+  <div id="cm-legend">
+    <div id="cm-legend-title"></div>
+    <div class="cm-ramp"></div>
+    <div class="cm-ends"><span id="cm-legend-min"></span><span id="cm-legend-max"></span></div>
+  </div>
+</div>
+
+<div class="cm-card">
+  <div class="cm-row cm-between">
+    <h3>Объекты <span id="cm-count" class="cm-muted"></span></h3>
+    <label class="cm-sortbox">Сортировка: <select id="cm-sort"></select>
+      <button type="button" id="cm-sort-dir"></button>
+    </label>
+    <div class="cm-pager">
+      <button type="button" id="cm-prev">←</button>
+      <span id="cm-page"></span>
+      <button type="button" id="cm-next">→</button>
+    </div>
+  </div>
+  <div class="cm-table-wrap">
+    <table class="cm-table" id="cm-table">
+      <thead><tr id="cm-head"></tr></thead>
+      <tbody id="cm-body"></tbody>
+    </table>
+  </div>
+  <p class="cm-muted">
+    Площадь со знаком «≈» — типовая для такого вида объекта: в OSM он отмечен точкой без контура.
+    Ликвидность складывается из размера населённого пункта, близости к его центру, числа жителей
+    в 500 м, остановок в 400 м, близости к магистральной дороге и плотности коммерции в 300 м,
+    с небольшим штрафом за конкурентов того же типа.
+  </p>
+</div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{ url_for('.static', filename='commerce.js') }}"></script>
+{% endblock %}
