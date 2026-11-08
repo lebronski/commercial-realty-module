@@ -15,7 +15,7 @@ API), индекс ликвидности по местоположению и �
 
 Подключение — см. INSTALL.md. Коротко: register(app).
 """
-__version__ = '2.2'
+__version__ = '2.3'
 
 MODULE_INFO = {
     'name': 'commerce_module',

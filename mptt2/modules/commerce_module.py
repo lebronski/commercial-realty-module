@@ -15,7 +15,7 @@ MODULE_INFO = {
     'name': 'commerce_module',
     'description': 'Коммерческая недвижимость: тепловая карта ликвидности, '
                    'цены покупки и дохода от аренды (данные Overpass API)',
-    'version': '2.2',
+    'version': '2.3',
 }
 
 MENU = {'url': '/modules/commerce', 'title': 'Коммерческая недвижимость'}
