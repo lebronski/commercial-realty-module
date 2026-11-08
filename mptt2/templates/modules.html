@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Управление модулями{% endblock %}
+
+{% block content %}
+<h2>Управление модулями</h2>
+<p class="muted">
+  Модуль — это .py-файл в каталоге <code>modules/</code>.
+  После установки/активации нужно перезапустить приложение, чтобы новые
+  маршруты зарегистрировались.
+</p>
+
+<table class="data-table" id="modules-table">
+  <thead>
+    <tr>
+      <th>Имя файла</th>
+      <th>Название</th>
+      <th>Описание</th>
+      <th>Версия</th>
+      <th>Активен</th>
+      <th>Загружен</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<h3>Установить модуль (.py)</h3>
+<form id="upload-form" enctype="multipart/form-data">
+  <input type="file" id="module-file" accept=".py" required>
+  <button type="submit">Загрузить</button>
+</form>
+
+<div id="restart-note" class="hidden notice">
+  Требуется перезапуск приложения для применения изменений.
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='modules.js') }}"></script>
+{% endblock %}

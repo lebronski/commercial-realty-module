@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Типы построек{% endblock %}
+
+{% block content %}
+<h2>Типы построек</h2>
+<p class="muted">Цвет типа используется для заливки домов на карте.</p>
+
+<table class="data-table" id="bt-table">
+  <thead>
+    <tr><th>ID</th><th>Название</th><th>Цвет</th><th>Превью</th><th></th></tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<h3>Добавить тип</h3>
+<form id="bt-form">
+  <input type="text"  id="bt-name"  placeholder="Название" required>
+  <input type="color" id="bt-color" value="#e67e22">
+  <button type="submit">Добавить</button>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='building_types.js') }}"></script>
+{% endblock %}

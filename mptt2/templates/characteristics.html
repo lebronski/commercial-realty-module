@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Характеристики{% endblock %}
+
+{% block content %}
+<h2>Характеристики</h2>
+<table class="data-table" id="char-table">
+  <thead>
+    <tr><th>ID</th><th>Название</th><th>Применимо к</th><th></th></tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<h3>Добавить характеристику</h3>
+<form id="char-form">
+  <input type="text" id="char-name" placeholder="Название" required>
+  <select id="char-applies">
+    <option value="all">Все элементы</option>
+    <option value="both">Узлы и рёбра</option>
+    <option value="node">Только узлы</option>
+    <option value="edge">Только рёбра</option>
+    <option value="building">Только постройки</option>
+  </select>
+  <button type="submit">Добавить</button>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='characteristics.js') }}"></script>
+{% endblock %}

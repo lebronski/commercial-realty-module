@@ -1,0 +1,5 @@
+Flask>=2.0
+folium>=0.14
+osmnx>=1.9
+shapely>=2.0
+requests>=2.28

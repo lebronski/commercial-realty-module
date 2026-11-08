@@ -1,0 +1,14 @@
+services:
+  overpass:
+    image: overpass-local:latest
+    container_name: overpass-server
+    ports:
+      - "12345:80"
+    volumes:
+      - "./data:/db"
+    environment:
+      OVERPASS_MODE: init
+      OVERPASS_META: "no"
+      OVERPASS_COMPRESSION: "gz"
+      OVERPASS_PLANET_URL: "http://example.com/planet.osm.bz2"
+    restart: unless-stopped

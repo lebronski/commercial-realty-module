@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Модуль Overpass API{% endblock %}
+
+{% block content %}
+<h2>Модуль интеграции с Overpass API</h2>
+<p class="muted">
+  Импорт дорог и зданий из OpenStreetMap. Запросы идут через Overpass-серверы
+  из списка ниже — сначала проверяются, потом используются по очереди.
+  Сервер, ответивший HTTP 429, считается рабочим (rate-limited).
+</p>
+
+<div class="card">
+  <h3>Настройки</h3>
+
+  <div class="form-row">
+    <label>Место (как в OSM):
+      <input type="text" id="ov-place" placeholder="Йошкар-Ола, Россия">
+    </label>
+  </div>
+
+  <div class="form-row">
+    <label>Тип дорожной сети:
+      <select id="ov-network">
+        <option value="drive">drive</option>
+        <option value="drive_service">drive_service</option>
+        <option value="walk">walk</option>
+        <option value="bike">bike</option>
+        <option value="all">all</option>
+      </select>
+    </label>
+    <label>Сетка (N×N):
+      <input type="number" id="ov-grid" min="1" max="10" value="2">
+    </label>
+    <label>Таймаут, с:
+      <input type="number" id="ov-timeout" min="30" max="600" value="90">
+    </label>
+  </div>
+
+  <div class="form-row">
+    <label class="checkbox">
+      <input type="checkbox" id="ov-roads" checked> Импортировать дороги
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" id="ov-buildings" checked> Импортировать здания
+    </label>
+  </div>
+
+  <div class="form-row" style="align-items:flex-start;">
+    <label style="flex-direction:column; align-items:stretch; width:100%;">
+      Список серверов Overpass (по одному в строке, первый — приоритетный):
+      <textarea id="ov-servers-text" rows="9"
+                style="font-family: monospace; font-size: 12px; width: 100%;"></textarea>
+    </label>
+  </div>
+
+  <div class="form-row">
+    <button id="ov-save">Сохранить настройки</button>
+    <button id="ov-test">Проверить серверы</button>
+    <button id="ov-run" class="primary">Обновить данные</button>
+    <button id="ov-clear" class="danger">Удалить импортированные данные</button>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Прогресс</h3>
+  <div id="ov-status">
+    <div class="progress"><div id="ov-bar" class="bar"></div></div>
+    <div class="progress-text">
+      <span id="ov-message">—</span>
+      <span id="ov-counter"></span>
+    </div>
+    <pre id="ov-log" class="log"></pre>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='overpass.js') }}"></script>
+{% endblock %}

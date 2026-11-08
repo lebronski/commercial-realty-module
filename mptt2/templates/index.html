@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}Карта{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+ <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+<header>
+  <h1>Цифровой двойник инфраструктуры</h1>
+  <nav>
+    <a href="/" class="{% if active == 'map' %}active{% endif %}">Карта</a>
+    <a href="/characteristics" class="{% if active == 'characteristics' %}active{% endif %}">Характеристики</a>
+    <a href="/building_types" class="{% if active == 'buildings' %}active{% endif %}">Типы построек</a>
+    <a href="/about" class="{% if active == 'about' %}active{% endif %}">О системе</a>
+    <div class="menu-dropdown">
+      <a href="#" id="modules-menu-link" class="{% if active == 'modules' %}active{% endif %}">Модули ▾</a>
+      <div id="modules-menu" class="dropdown hidden">
+        <a href="/modules">Управление модулями</a>
+        {% for m in menu_modules %}
+          <a href="{{ m.url }}">{{ m.title }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div id="map-container">
+    {{ map_html | safe }}
+    <div id="zoom-controls">
+      <button id="zoom-out"  title="Отдалить">−</button>
+      <input  id="zoom-slider" type="range" min="0" max="100" value="50">
+      <button id="zoom-in"   title="Приблизить">+</button>
+      <span   id="zoom-label">1.0×</span>
+      <button id="zoom-reset" title="Сбросить масштаб">⟲</button>
+    </div>
+    <div id="mode-hint" class="hidden"></div>
+  </div>
+
+  <div id="toolbar">
+    <button id="btn-add-node">Добавить вершину</button>
+    <button id="btn-add-edge">Добавить ребро</button>
+    <button id="btn-add-building">Добавить постройку</button>
+    <button id="btn-delete">Удалить элемент</button>
+    <button id="btn-cancel" class="hidden">Отмена</button>
+  </div>
+
+  <div id="time-controls">
+    <label>День недели:
+      <select id="weekday">
+        <option value="0">Понедельник</option>
+        <option value="1">Вторник</option>
+        <option value="2">Среда</option>
+        <option value="3">Четверг</option>
+        <option value="4">Пятница</option>
+        <option value="5">Суббота</option>
+        <option value="6">Воскресенье</option>
+      </select>
+    </label>
+    <label>Час:
+      <input type="range" id="hour" min="0" max="24" value="12">
+      <span id="hour-label">12:00</span>
+    </label>
+  </div>
+</main>
+
+<!-- Окно характеристик -->
+<div id="modal" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modal-title"></h3>
+      <button id="modal-close">×</button>
+    </div>
+    <div class="modal-body">
+
+      <div id="editor" class="hidden">
+        <label>Название:
+          <input type="text" id="obj-name">
+        </label>
+        <button id="obj-save">Сохранить название</button>
+      </div>
+
+      <div id="type-row" class="hidden">
+        <label>Тип:
+          <select id="obj-type-select"></select>
+        </label>
+      </div>
+
+      <h4>Характеристики на <span id="modal-time"></span></h4>
+      <table class="data-table">
+        <thead>
+          <tr><th>Характеристика</th><th>Значение</th><th></th></tr>
+        </thead>
+        <tbody id="data-body"></tbody>
+      </table>
+
+      <h4>Добавить / обновить значение</h4>
+      <div class="add-data">
+        <select id="char-select"></select>
+        <button id="btn-new-char" type="button" title="Создать характеристику">+</button>
+        <input type="number" step="any" id="new-value" placeholder="Значение">
+        <button id="btn-add-data">Сохранить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const link = document.getElementById('modules-menu-link');
+  const menu = document.getElementById('modules-menu');
+  if (!link || !menu) return;
+  link.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    menu.classList.toggle('hidden');
+  });
+  document.addEventListener('click', e => {
+    if (menu.classList.contains('hidden')) return;
+    if (link.contains(e.target) || menu.contains(e.target)) return;
+    menu.classList.add('hidden');
+  });
+})();
+</script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

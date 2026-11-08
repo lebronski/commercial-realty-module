@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Данные приложения: база и кэш создаются при запуске
+mptt2/graph.db
+mptt2/cache/
+mptt2/modules/commerce_realty/data/
+
+# Overpass: база и дампы OSM (гигабайты, пересоздаются по инструкции)
+overpass/data/
+*.osm.pbf
+*.osm.bz2
+*.osm.bz2.*
+
+# Прочее
+.idea/
+.vscode/
+Thumbs.db
+desktop.ini

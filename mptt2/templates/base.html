@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}ЦДИ{% endblock %}</title>
+ <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% block head %}{% endblock %}
+
+</head>
+<body>
+
+<header>
+  <h1>Цифровой двойник инфраструктуры</h1>
+  <nav>
+    <a href="/" class="{% if active == 'map' %}active{% endif %}">Карта</a>
+    <a href="/characteristics" class="{% if active == 'characteristics' %}active{% endif %}">Характеристики</a>
+    <a href="/building_types" class="{% if active == 'buildings' %}active{% endif %}">Типы построек</a>
+    <a href="/about" class="{% if active == 'about' %}active{% endif %}">О системе</a>
+    <div class="menu-dropdown">
+      <a href="#" id="modules-menu-link" class="{% if active == 'modules' %}active{% endif %}">Модули ▾</a>
+      <div id="modules-menu" class="dropdown hidden">
+        <a href="/modules">Управление модулями</a>
+        {% for m in menu_modules %}
+          <a href="{{ m.url }}">{{ m.title }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+{% block content %}{% endblock %}
+</main>
+
+<script>
+(function(){
+  const link = document.getElementById('modules-menu-link');
+  const menu = document.getElementById('modules-menu');
+  if (!link || !menu) return;
+  link.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    menu.classList.toggle('hidden');
+  });
+  document.addEventListener('click', e => {
+    if (menu.classList.contains('hidden')) return;
+    if (link.contains(e.target) || menu.contains(e.target)) return;
+    menu.classList.add('hidden');
+  });
+})();
+</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>
